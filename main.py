@@ -1,8 +1,9 @@
 import os
 import re
-import objects
-from SQL import SQL
 import asyncio
+import objects
+import heroku3
+from SQL import SQL
 from datetime import datetime
 from telethon.sync import TelegramClient
 # =================================================================================================================
@@ -85,6 +86,12 @@ async def main():
             delay = datetime.now().timestamp() - stamp
             Auth.dev.printer(f'Пройден {range(message_id, ending-1)} за {delay} сек.')
             await asyncio.sleep(61 - delay)
+            if message_id % 300000 == 0:
+                config = {'message_id': message_id-600}
+                connection = heroku3.from_key(os.environ['api'])
+                for app in connection.apps():
+                    app.update_config(config)
+                await asyncio.sleep(200)
             message_id += 300
         except IndexError and Exception:
             await Auth.dev.async_except()
