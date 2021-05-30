@@ -84,7 +84,7 @@ async def main():
                 drive_client.update_file(os.environ['db_file_id'], 'logs.db', description)
             delay = datetime.now().timestamp() - stamp
             Auth.dev.printer(f'Пройден {range(message_id, ending-1)} за {delay} сек.')
-            await asyncio.sleep(60 - delay)
+            await asyncio.sleep(61 - delay)
             message_id += 300
         except IndexError and Exception:
             await Auth.dev.async_except()
