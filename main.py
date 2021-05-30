@@ -78,7 +78,7 @@ async def main():
                         'text': re.sub('\'', '"', replace(text)) if text else None,
                         'raw_text': re.sub('\'', '"', replace(raw_text)) if raw_text else None,
                         'entities': re.sub('\'', '"', replace(str(raw_entities))) if raw_entities else None}
-                    db.update('logs', message_id, update)
+                    db.update('logs', message.id, update)
             if drive_client:
                 description = f'Last range: {message_id, ending-1}\nmax_message_id: {max_message_id}'
                 drive_client.update_file(os.environ['db_file_id'], 'logs.db', description)
